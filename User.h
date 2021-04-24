@@ -6,7 +6,8 @@
 #define TIC_TAC_TOE_USER_H
 
 
-class User {
+class User
+{
 
 };
 

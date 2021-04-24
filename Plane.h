@@ -6,8 +6,23 @@
 #define TIC_TAC_TOE_PLANE_H
 
 
-class Plane {
+class Plane
+{
+public:
+    Plane();
+    explicit Plane(int size);
 
+    bool IsEmpty();
+    bool IsFull();
+
+    int DecideTurn();
+
+    void set_size(int new_size);
+    int get_size() const;
+
+private:
+    int size_;
+    char *plane_;
 };
 
 
