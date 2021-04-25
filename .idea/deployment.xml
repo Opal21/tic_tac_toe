@@ -2,10 +2,10 @@
 <project version="4">
   <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="WSL (b7c9f986-a363-4de3-b3ae-1df6af36acf1)">
+      <paths name="Remote Host (a515086a-fd98-48af-a448-ccedbd491774)">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/tmp/tic_tac_toe" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
