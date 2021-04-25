@@ -2,6 +2,7 @@
 // Created by marci on 23/04/2021.
 //
 
+#include <iostream>
 #include "Plane.h"
 
 Plane::Plane() : size_(3), plane_(nullptr) {}
@@ -37,4 +38,13 @@ void Plane::set_size(int new_size)
 int Plane::get_size() const
 {
     return this->size_;
+}
+
+void Plane::PrintPlane()
+{
+    std::cout << "Plane" << std::endl;
+    for (int i=0; i < this->size_; i++)
+    {
+        std::cout << this->plane_[i];
+    }
 }

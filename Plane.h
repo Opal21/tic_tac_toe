@@ -14,8 +14,8 @@ public:
 
     bool IsEmpty();
     bool IsFull();
-
     int DecideTurn();
+    void PrintPlane();
 
     void set_size(int new_size);
     int get_size() const;

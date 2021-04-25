@@ -8,7 +8,13 @@
 
 class Player
 {
+public:
+    bool MyTurn();
 
+    char get_sign();
+    void set_sign(char new_sign);
+private:
+    char sign;
 };
 
 
