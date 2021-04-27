@@ -6,7 +6,9 @@
 #define TIC_TAC_TOE_USER_H
 
 
-class User
+#include "Player.h"
+
+class User : public Player
 {
 
 };
