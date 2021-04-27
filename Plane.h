@@ -22,7 +22,7 @@ public:
 
 private:
     int size_;
-    char *plane_;
+    char** plane_;
 };
 
 

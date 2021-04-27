@@ -7,11 +7,11 @@
 
 Plane::Plane() : size_(3), plane_(nullptr) {}
 
-Plane::Plane(int size) : size_(size), plane_(new char [size_])
+Plane::Plane(int size) : size_(size), plane_(new char* [size])
 {
-    for (int i=0; i < this->size_; i++)
+    for (int i=0; i < size_; i++)
     {
-        this->plane_[i] = 95;
+        plane_[i] = new char [size_];
     }
 }
 
