@@ -42,9 +42,9 @@ int Plane::get_size()
 
 void Plane::PrintPlane()
 {
-    std::cout << "Plane" << std::endl;
-    for (int i=0; i < this->size_; i++)
-    {
-        std::cout << this->plane_[i];
-    }
+    std::cout << "Current plane: " << std::endl;
+    std::cout << "---------" << std::endl << "| " << plane_[0][0] << plane_[0][1] << plane_[0][2]
+              << plane_[0][2] << " |" << std::endl <<  "| " << plane_[1][0] << plane_[1][1]
+              << plane_[1][2] << " |" << std::endl <<  "| " << plane_[2][0] << plane_[2][1]
+              << plane_[2][2] << " |" << std::endl;
 }

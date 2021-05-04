@@ -20,9 +20,10 @@ public:
     void set_size(int new_size);
     int get_size();
 
+    char** plane_;
+
 private:
     int size_;
-    char** plane_;
 };
 
 

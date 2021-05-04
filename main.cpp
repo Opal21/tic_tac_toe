@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 #include "inc/Player.h"
 #include "inc/Bot.h"
 #include "inc/Plane.h"
@@ -13,6 +14,7 @@ int main()
     {
         std::cout << "Input command: " << std::endl;
         std::cin >> action >> player1_type >> player2_type;
+        // Chciałbym żeby player1_type i player2_type były opcjonalne
         if (action == "start")
         {
             if (player1_type == "user")
@@ -45,6 +47,10 @@ int main()
                 std::cout << "Wrong command!" << std::endl;
             }
         }
+//        else if (action == "exit")
+//        {
+//            exit();
+//        }
     }
     return 0;
 }
