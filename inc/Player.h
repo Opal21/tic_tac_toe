@@ -12,6 +12,8 @@ public:
     Player();
     bool MyTurn();
 
+    void PlaceSign();
+
     char get_sign();
     void set_sign(char new_sign);
 private:

@@ -16,4 +16,9 @@ bool Player::MyTurn() {
     return false;
 }
 
+void Player::PlaceSign()
+{
+
+}
+
 Player::Player() = default;

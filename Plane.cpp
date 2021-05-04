@@ -25,11 +25,6 @@ bool Plane::IsFull()
     return false;
 }
 
-int Plane::DecideTurn()
-{
-    return 0;
-}
-
 void Plane::set_size(int new_size)
 {
     this->size_=new_size;
@@ -48,3 +43,49 @@ void Plane::PrintPlane()
               << plane_[1][2] << " |" << std::endl <<  "| " << plane_[2][0] << plane_[2][1]
               << plane_[2][2] << " |" << std::endl;
 }
+
+char Plane::DecideWinner()
+{
+    for (int i = 0; i < 3; i++)
+    {
+        if (plane_[i][0] == plane_[i][1] == plane_[i][2])
+        {
+            if (plane_[i][0] == 79)
+            {
+                return 79; // Letter "O" in ASCII
+                break;
+            }
+
+            else if(plane_[i][0] == 88)
+            {
+                return 88; // Letter "X" in ASCII
+                break;
+            }
+        }
+        else if (plane_[0][i] == plane_[1][i] == plane_[2][i])
+        {
+            if (plane_[0][i] == 79)
+            {
+                return 79; // Letter "O" in ASCII
+                break;
+            }
+
+            else if(plane_[0][i] == 88)
+            {
+                return 88; // Letter "X" in ASCII
+                break;
+            }
+        }
+
+        else if (plane_[0][0] == plane_[1][1] == plane_[2][2] or plane_[0][2] == plane_[1][1] == \
+                plane_[2][0])
+        {
+            if (plane_[1][1] == 79){return 79;}
+            else if (plane_[1][1] == 88){return 88;}
+        }
+        else {return 68;}
+
+    }
+}
+
+char Plane::DecideTurn() {}
