@@ -2,7 +2,7 @@
 // Created by Marcin Opaliński on 25/04/2021.
 //
 
-#include "Player.h"
+#include "inc/Player.h"
 
 char Player::get_sign() {
     return 0;
