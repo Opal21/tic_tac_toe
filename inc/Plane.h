@@ -18,7 +18,7 @@ public:
     void PrintPlane();
 
     void set_size(int new_size);
-    int get_size() const;
+    int get_size();
 
 private:
     int size_;

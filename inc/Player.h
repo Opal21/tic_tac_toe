@@ -9,12 +9,13 @@
 class Player
 {
 public:
+    Player();
     bool MyTurn();
 
     char get_sign();
     void set_sign(char new_sign);
 private:
-    char sign;
+    char sign{};
 };
 
 

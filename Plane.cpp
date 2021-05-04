@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "Plane.h"
+#include "inc/Plane.h"
 
 Plane::Plane() : size_(3), plane_(nullptr) {}
 
@@ -35,7 +35,7 @@ void Plane::set_size(int new_size)
     this->size_=new_size;
 }
 
-int Plane::get_size() const
+int Plane::get_size()
 {
     return this->size_;
 }

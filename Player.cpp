@@ -15,3 +15,5 @@ void Player::set_sign(char new_sign) {
 bool Player::MyTurn() {
     return false;
 }
+
+Player::Player() = default;
