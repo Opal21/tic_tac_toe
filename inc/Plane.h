@@ -14,12 +14,10 @@ public:
 
     bool IsEmpty();
     bool IsFull();
-    void PrintPlane();
+    void PrintPlane() const;
     char DecideWinner() const;
     char DecideTurn();
-
-    void set_size(int new_size);
-    int get_size();
+    int get_size() const;
 
     char** plane_;
 

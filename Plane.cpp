@@ -22,20 +22,16 @@ bool Plane::IsEmpty()
 
 bool Plane::IsFull()
 {
+    // Iterate over every element
     return false;
 }
 
-void Plane::set_size(int new_size)
-{
-    this->size_=new_size;
-}
-
-int Plane::get_size()
+int Plane::get_size() const
 {
     return this->size_;
 }
 
-void Plane::PrintPlane()
+void Plane::PrintPlane() const
 {
     std::cout << "Current plane: " << std::endl;
     std::cout << "---------" << std::endl << "| " << plane_[0][0] << plane_[0][1] << plane_[0][2]
