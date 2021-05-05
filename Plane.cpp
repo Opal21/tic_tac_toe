@@ -1,7 +1,7 @@
 #include <iostream>
 #include "inc/Plane.h"
 
-Plane::Plane() : size_(3), plane_(nullptr) {}
+Plane::Plane() : size_(3), someoneWon(false), plane_(nullptr) {}
 
 Plane::Plane(int size) : size_(size), plane_(new char* [size])
 {
