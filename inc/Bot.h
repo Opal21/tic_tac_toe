@@ -10,6 +10,10 @@
 
 class Bot : public Player
 {
+public:
+    Bot();
+
+private:
 
 };
 

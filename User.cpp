@@ -3,3 +3,5 @@
 //
 
 #include "inc/User.h"
+
+User::User() = default;

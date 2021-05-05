@@ -7,6 +7,7 @@
 class User : public Player
 {
 public:
+    User();
 
 private:
 

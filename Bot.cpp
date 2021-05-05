@@ -3,3 +3,5 @@
 //
 
 #include "inc/Bot.h"
+
+Bot::Bot() = default;
