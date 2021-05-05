@@ -41,7 +41,7 @@ void Plane::PrintPlane()
     std::cout << "---------" << std::endl << "| " << plane_[0][0] << plane_[0][1] << plane_[0][2]
               << plane_[0][2] << " |" << std::endl <<  "| " << plane_[1][0] << plane_[1][1]
               << plane_[1][2] << " |" << std::endl <<  "| " << plane_[2][0] << plane_[2][1]
-              << plane_[2][2] << " |" << std::endl;
+              << plane_[2][2] << " |" << std::endl << "---------" << std::endl;
 }
 
 char Plane::DecideWinner() const
