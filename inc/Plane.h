@@ -15,7 +15,7 @@ public:
     bool IsEmpty();
     bool IsFull();
     void PrintPlane();
-    char DecideWinner();
+    char DecideWinner() const;
     char DecideTurn();
 
     void set_size(int new_size);

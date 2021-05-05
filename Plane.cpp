@@ -44,46 +44,36 @@ void Plane::PrintPlane()
               << plane_[2][2] << " |" << std::endl;
 }
 
-char Plane::DecideWinner()
+char Plane::DecideWinner() const
 {
     for (int i = 0; i < 3; i++)
     {
         if (plane_[i][0] == plane_[i][1] == plane_[i][2])
         {
-            if (plane_[i][0] == 79)
+            if (plane_[i][0] == 'O')
             {
-                return 79; // Letter "O" in ASCII
-                break;
+                return 'O';
             }
 
-            else if(plane_[i][0] == 88)
+            else if(plane_[i][0] == 'X')
             {
-                return 88; // Letter "X" in ASCII
-                break;
+                return 'X';
             }
         }
         else if (plane_[0][i] == plane_[1][i] == plane_[2][i])
         {
-            if (plane_[0][i] == 79)
-            {
-                return 79; // Letter "O" in ASCII
-                break;
-            }
+            if (plane_[0][i] == 'O') {return 'O';}
 
-            else if(plane_[0][i] == 88)
-            {
-                return 88; // Letter "X" in ASCII
-                break;
-            }
+            else if(plane_[0][i] == 'X') {return 'X';}
         }
 
-        else if (plane_[0][0] == plane_[1][1] == plane_[2][2] or plane_[0][2] == plane_[1][1] == \
-                plane_[2][0])
+        else if (plane_[0][0] == plane_[1][1] == plane_[2][2] or plane_[0][2] == plane_[1][1] ==
+        plane_[2][0])
         {
-            if (plane_[1][1] == 79){return 79;}
-            else if (plane_[1][1] == 88){return 88;}
+            if (plane_[1][1] == 'O') {return 'O';}
+            else if (plane_[1][1] == 'X') {return 'X';}
         }
-        else {return 68;}
+        else {return 'D';} //Draw
 
     }
 }
