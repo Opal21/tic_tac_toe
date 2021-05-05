@@ -7,7 +7,9 @@
 class User : public Player
 {
 public:
-    super.
+
+private:
+
 };
 
 

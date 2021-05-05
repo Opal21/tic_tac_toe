@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stdlib.h>
 #include "inc/Player.h"
 #include "inc/Bot.h"
 #include "inc/Plane.h"
@@ -8,6 +7,7 @@
 int main()
 {
     std::string action, player1_type, player2_type;
+    bool endGame;
     Plane plane;
 
     while (true)
@@ -47,10 +47,72 @@ int main()
                 std::cout << "Wrong command!" << std::endl;
             }
         }
-//        else if (action == "exit")
-//        {
-//            exit();
-//        }
+        else if (action == "exit")
+        {
+            endGame = true;
+            break;
+        }
+
+
+
     }
+
+    plane.PrintPlane();
+
+    if (not endGame)
+    {
+        while (true)
+        {
+            user1.MakeMove();
+            plane.PrintPlane();
+            char winner1 = plane.DecideWinner();
+            switch (winner1)
+            {
+                case 'X':
+                    std::cout << "X has won!" << std::endl;
+                    plane.someoneWon = true;
+                    break;
+                case 'O':
+                    std::cout << "O has won!" << std::endl;
+                    plane.someoneWon = true;
+                    break;
+                case 'D':
+                    if (plane.IsFull())
+                    {
+                        std::cout << "Draw!" << std::endl;
+                        plane.someoneWon = true;
+                        break;
+                    }
+                    break;
+                default:
+                    std::cout << "error" << std::endl;
+            }
+            user2.MakeMove();
+            plane.PrintPlane();
+            char winner2 = plane.DecideWinner();
+            switch (winner2)
+            {
+                case 'X':
+                    std::cout << "X has won!" << std::endl;
+                    plane.someoneWon = true;
+                    break;
+                case 'O':
+                    std::cout << "O has won!" << std::endl;
+                    plane.someoneWon = true;
+                    break;
+                case 'D':
+                    if (plane.IsFull())
+                    {
+                        std::cout << "Draw!" << std::endl;
+                        plane.someoneWon = true;
+                        break;
+                    }
+                    break;
+                default:
+                    std::cout << "error" << std::endl;
+            }
+        }
+    }
+
     return 0;
 }

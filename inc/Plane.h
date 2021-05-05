@@ -16,6 +16,7 @@ public:
     int get_size() const;
 
     char** plane_;
+    bool someoneWon;
 
 private:
     int size_;
