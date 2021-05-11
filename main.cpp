@@ -52,9 +52,6 @@ int main()
             endGame = true;
             break;
         }
-
-
-
     }
 
     plane.PrintPlane();
