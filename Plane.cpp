@@ -74,6 +74,7 @@ bool Plane::finished() const
             }
         }
     }
+    return true;
 }
 
 bool Plane::apply(const Move &m)
