@@ -12,15 +12,18 @@ Plane::Plane(unsigned int size) : s(size)
     }
 }
 
-Plane::Plane(const Plane &ob) {
+Plane::Plane(const Plane &ob)
+{
 
 }
 
-Plane::Plane(const Plane &&ob) {
+Plane::Plane(const Plane &&ob)
+{
 
 }
 
-Plane &Plane::operator=(const Plane &ob) {
+Plane &Plane::operator=(const Plane &ob)
+{
 
 }
 
@@ -34,7 +37,8 @@ char Plane::at(int k, int w) const
     return this->data[k][w];
 }
 
-std::vector<Move> Plane::evaluate(char player_color) const {
+std::vector<Move> Plane::evaluate(char player_color) const
+{
     return std::vector<Move>();
 }
 
@@ -66,14 +70,17 @@ bool Plane::apply(const Move &m)
     }
 }
 
-Move::Move(int k, int w, char color, double value) {
+Move::Move(int k, int w, char color, double value)
+{
 
 }
 
-Move::Move(const Move &ob) {
+Move::Move(const Move &ob)
+{
 
 }
 
-Move::Move(const Move &&ob) {
+Move::Move(const Move &&ob)
+{
 
 }
