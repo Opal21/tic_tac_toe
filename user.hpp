@@ -12,7 +12,7 @@ protected:
 		char player_color;
 public:
     virtual Move pass_control(const Plane& plane) const;
-    virtual char color() const);
+    virtual char color() const;
 };
 
 class Player : public User
@@ -39,7 +39,7 @@ class Game
 {
 	private:
 		Plane plane;
-		User* players[2]; // two players - we can put Player or Bot inside using polimorphy
+		User* players[2]; // two players - we can put Player or Bot inside using polymorphy
 		char l_color;
 	public:
 		Game(
@@ -51,8 +51,8 @@ class Game
 		char last_color() const;
 		void forward(); 
 		// ideas, we don't need to make them tho
-		bool save(std::string filename) const; // save current state of game to file 
-		bool load(std::string filename); // load state of game from file
+		// bool save(std::string filename) const; // save current state of game to file
+		// bool load(std::string filename); // load state of game from file
 };
 
 #endif
