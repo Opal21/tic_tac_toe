@@ -1,9 +1,9 @@
 #include <iostream>
 #include "user.hpp"
 
-Player::Player(User player_color)
+Player::Player(char player_color)
 {
-
+    this->player_color = player_color;
 }
 
 Move Player::pass_control(Plane plane) const
@@ -11,41 +11,50 @@ Move Player::pass_control(Plane plane) const
     return Move(0, 0, 0, 0);
 }
 
-char Player::color() const
-{
-    return User::color();
-}
-
 Bot::Bot(char player_color)
 {
-
+    this->player_color = player_color;
 }
 
 Move Bot::pass_control(const Plane &plane) const
 {
-    return User::pass_control(plane);
+    return Move(0,0,0,0);
 }
 
-char Bot::color() const
+Game::Game(int size, int x_player_mode, int o_player_mode) : plane(size)
 {
-    return User::color();
+    if (x_player_mode)
+    {
+        this->players[0] = new Bot('X');
+    }
+    else
+    {
+        this->players[0] = new Player('X');
+    }
+    if (o_player_mode)
+    {
+        this->players[1] = new Bot('O');
+    }
+    else
+    {
+        this->players[1] = new Player('O');
+    }
 }
 
-Game::Game(int size, int x_player_mode, int o_player_mode)
+Game::~Game()
 {
-
+    delete players[0];
+    delete players[1];
 }
-
-Game::~Game() = default;
 
 bool Game::finished() const
 {
-    return false;
+    return plane.finished();
 }
 
 Plane Game::last_plane() const
 {
-    return Plane(this->plane.size());
+    return Plane(this->plane);
 }
 
 char Game::last_color() const
@@ -56,4 +65,9 @@ char Game::last_color() const
 void Game::forward()
 {
 
+}
+
+char User::color() const
+{
+    return this->player_color;
 }
