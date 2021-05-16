@@ -1,73 +1,57 @@
 #include <iostream>
-#include "inc/Plane.h"
+#include "plane.hpp"
 
-Plane::Plane() : size_(3), someoneWon(false), plane_(nullptr) {}
-
-Plane::Plane(int size) : size_(size), plane_(new char* [size])
+Plane::Plane(unsigned int size) : s(size)
 {
-    for (int i=0; i < size_; i++)
+    for (int i = 0; i < this->s; i++)
     {
-        plane_[i] = new char [size_];
+        for (int j = 0; j < this->s; j++)
+        {
+            this->data[i][j] = ' ';
+        }
     }
 }
 
-bool Plane::IsEmpty()
-{
+Plane::Plane(const Plane &ob) {
+
+}
+
+Plane::Plane(const Plane &&ob) {
+
+}
+
+Plane &Plane::operator=(const Plane &ob) {
+    return <#initializer#>;
+}
+
+unsigned int Plane::size() const {
+    return 0;
+}
+
+char Plane::at(int k, int w) const {
+    return 0;
+}
+
+std::vector<Move> Plane::evaluate(char player_color) const {
+    return std::vector<Move>();
+}
+
+bool Plane::finished() const {
     return false;
 }
 
-bool Plane::IsFull()
-{
-    // Iterate over every element
+bool Plane::apply(const Move &m) {
     return false;
 }
 
-int Plane::get_size() const
-{
-    return this->size_;
+Move::Move(int k, int w, char color, double value) {
+
 }
 
-void Plane::PrintPlane() const
-{
-    std::cout << "Current plane: " << std::endl;
-    std::cout << "---------" << std::endl << "| " << plane_[0][0] << plane_[0][1] << plane_[0][2]
-              << plane_[0][2] << " |" << std::endl <<  "| " << plane_[1][0] << plane_[1][1]
-              << plane_[1][2] << " |" << std::endl <<  "| " << plane_[2][0] << plane_[2][1]
-              << plane_[2][2] << " |" << std::endl << "---------" << std::endl;
+Move::Move(const Move &ob) {
+
 }
 
-char Plane::DecideWinner() const
-{
-    for (int i = 0; i < 3; i++)
-    {
-        if (plane_[i][0] == plane_[i][1] == plane_[i][2])
-        {
-            if (plane_[i][0] == 'O')
-            {
-                return 'O';
-            }
+Move::Move(const Move &&ob) {
 
-            else if(plane_[i][0] == 'X')
-            {
-                return 'X';
-            }
-        }
-        else if (plane_[0][i] == plane_[1][i] == plane_[2][i])
-        {
-            if (plane_[0][i] == 'O') {return 'O';}
-
-            else if(plane_[0][i] == 'X') {return 'X';}
-        }
-
-        else if (plane_[0][0] == plane_[1][1] == plane_[2][2] or plane_[0][2] == plane_[1][1] ==
-        plane_[2][0])
-        {
-            if (plane_[1][1] == 'O') {return 'O';}
-            else if (plane_[1][1] == 'X') {return 'X';}
-        }
-        else {return 'D';} //Draw
-
-    }
 }
-
-char Plane::DecideTurn() {}
