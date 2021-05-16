@@ -10,19 +10,19 @@ class User
 {
 protected:
 		char player_color;
-	public:
-		virtual Move pass_control(const Plane& plane) const;
-		virtual char color() const);
+public:
+    virtual Move pass_control(const Plane& plane) const;
+    virtual char color() const);
 };
 
 class Player : public User
 {
-	private:
-		
-	public:
-		Player(char player_color);
-		Move pass_control(Plane plane) const;
-		char color() const;
+private:
+
+public:
+    Player(User player_color);
+    Move pass_control(Plane plane) const;
+    char color() const;
 };
 
 class Bot : public User
