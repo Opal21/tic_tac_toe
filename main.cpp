@@ -4,6 +4,6 @@
 
 int main()
 {
-
+    Game game(3, 0, 1);
     return 0;
 }

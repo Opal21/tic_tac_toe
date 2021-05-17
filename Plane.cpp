@@ -23,7 +23,7 @@ Plane::Plane(const Plane &ob) : size_(ob.get_size())
     }
 }
 
-Plane::Plane(const Plane &&ob) : size_(ob.get_size())
+Plane::Plane(const Plane &&ob) noexcept : size_(ob.get_size())
 {
     for (int i = 0; i < this->size_; i++)
     {
@@ -143,7 +143,7 @@ Move::Move(const Move &ob)
     this->sign = ob.sign;
 }
 
-Move::Move(const Move &&ob)
+Move::Move(const Move &&ob) noexcept
 {
     this->col = ob.col;
     this->row = ob.row;

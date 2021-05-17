@@ -1,4 +1,3 @@
-
 #ifndef PLANE_HPP
 #define PLANE_HPP
 
@@ -13,7 +12,7 @@ struct Move
 	
 	Move(int c, int r, char sign);
 	Move(const Move& ob);
-	Move(const Move&& ob);
+	Move(const Move&& ob) noexcept ;
 };
 
 class Plane
@@ -24,12 +23,11 @@ public:
     [[nodiscard]] bool is_full() const; // check if the game array is full
     [[nodiscard]] char who_won() const; // decide who won, possible outcomes: 'X', 'O', ' '
     [[nodiscard]] std::vector<Move> evaluate(char player_color) const; // evaluate
-
     bool make_move(const Move& m);
 
-    Plane(unsigned int size);
+    explicit Plane(unsigned int size);
     Plane(const Plane& ob);
-    Plane(const Plane&& ob);
+    Plane(const Plane&& ob) noexcept ;
     Plane& operator = (const Plane& ob);
 private:
     std::vector<std::vector<char>> data; // data[column][row]

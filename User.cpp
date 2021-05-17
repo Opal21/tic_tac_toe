@@ -1,27 +1,37 @@
 #include <iostream>
 #include "user.hpp"
 
-Player::Player(char player_color)
+char User::get_player_sign() const
 {
-    this->player_color = player_color;
+    return this->player_sign;
 }
 
-Move Player::pass_control(Plane plane) const
+Player::Player(char player_sign)
 {
-    return Move(0, 0, 0, 0);
+    this->player_sign = player_sign;
 }
 
-Bot::Bot(char player_color)
+Move Player::decide_move(const Plane& plane) const 
 {
-    this->player_color = player_color;
+    char col, row;
+    std::cout << plane << std::endl;
+    std::cout << "Enter the coordinates: " << std::endl;
+    std::cin >> col >> row;
+    return Move(col, row, this->get_player_sign());
 }
 
-Move Bot::pass_control(const Plane &plane) const
+Bot::Bot(char player_sign)
 {
-    return Move(0,0,0,0);
+    this->player_sign = player_sign;
 }
 
-Game::Game(int size, int x_player_mode, int o_player_mode) : plane(size)
+Move Bot::decide_move(const Plane &plane) const
+{
+    char col, row;
+    return Move(col,row, this->get_player_sign());
+}
+
+Game::Game(int size, int x_player_mode, int o_player_mode) : plane(size), l_sign(' ')
 {
     if (x_player_mode)
     {
@@ -41,15 +51,12 @@ Game::Game(int size, int x_player_mode, int o_player_mode) : plane(size)
     }
 }
 
-Game::~Game()
-{
-    delete players[0];
-    delete players[1];
-}
+Game::~Game() = default;
 
-bool Game::finished() const
+bool Game::is_finished() const
 {
-    return plane.finished();
+    if (plane.who_won() != ' ' || plane.is_full()) {return true;}
+    else {return false;}
 }
 
 Plane Game::last_plane() const
@@ -57,17 +64,12 @@ Plane Game::last_plane() const
     return Plane(this->plane);
 }
 
-char Game::last_color() const
+char Game::last_sign() const
 {
-    return this->l_color;
+    return this->l_sign;
 }
 
 void Game::forward()
 {
 
-}
-
-char User::color() const
-{
-    return this->player_color;
 }
