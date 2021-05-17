@@ -1,60 +1,60 @@
 #include <iostream>
 #include "plane.hpp"
 
-Plane::Plane(unsigned int size) : s(size)
+Plane::Plane(unsigned int size) : size_(size)
 {
-    for (int i = 0; i < this->s; i++)
+    for (int i = 0; i < this->size_; i++)
     {
-        for (int j = 0; j < this->s; j++)
+        for (int j = 0; j < this->size_; j++)
         {
             this->data[i][j] = ' ';
         }
     }
 }
 
-Plane::Plane(const Plane &ob) : s(ob.size())
+Plane::Plane(const Plane &ob) : size_(ob.get_size())
 {
-    for (int i = 0; i < this->s; i++)
+    for (int i = 0; i < this->size_; i++)
     {
-        for (int j = 0; j < this->s; j++)
+        for (int j = 0; j < this->size_; j++)
         {
-            this->data[i][j] = ob.at(i, j);
+            this->data[i][j] = ob.get_sign_at(i, j);
         }
     }
 }
 
-Plane::Plane(const Plane &&ob) : s(ob.size())
+Plane::Plane(const Plane &&ob) : size_(ob.get_size())
 {
-    for (int i = 0; i < this->s; i++)
+    for (int i = 0; i < this->size_; i++)
     {
-        for (int j = 0; j < this->s; j++)
+        for (int j = 0; j < this->size_; j++)
         {
-            this->data[i][j] = ob.at(i, j);
+            this->data[i][j] = ob.get_sign_at(i, j);
         }
     }
 }
 
 Plane &Plane::operator=(const Plane &ob)
 {
-    this->s = ob.size();
-    for (int i = 0; i < this->s; i++)
+    this->size_ = ob.get_size();
+    for (int i = 0; i < this->size_; i++)
     {
-        for (int j = 0; j < this->s; j++)
+        for (int j = 0; j < this->size_; j++)
         {
-            this->data[i][j] = ob.at(i, j);
+            this->data[i][j] = ob.get_sign_at(i, j);
         }
     }
     return *this;
 }
 
-unsigned int Plane::size() const
+unsigned int Plane::get_size() const
 {
-    return this->s;
+    return this->size_;
 }
 
-char Plane::at(int k, int w) const
+char Plane::get_sign_at(int column, int row) const
 {
-    return this->data.at(k).at(w);
+    return this->data.at(column).at(row);
 }
 
 std::vector<Move> Plane::evaluate(char player_color) const
@@ -62,11 +62,11 @@ std::vector<Move> Plane::evaluate(char player_color) const
     return std::vector<Move>();
 }
 
-bool Plane::finished() const
+bool Plane::is_full() const
 {
-    for (int i = 0; i < this->s; i++)
+    for (int i = 0; i < this->size_; i++)
     {
-        for (int j = 0; j < this->s; j++)
+        for (int j = 0; j < this->size_; j++)
         {
             if (this->data[i][j] == ' ')
             {
@@ -77,40 +77,75 @@ bool Plane::finished() const
     return true;
 }
 
-bool Plane::apply(const Move &m)
+bool Plane::make_move(const Move &m)
 {
-    if (this->at(m.k, m.w) == ' ')
+    if (this->get_sign_at(m.col, m.row) == ' ')
     {
-        this->data.at(m.k).at(m.w) = m.color;
+        this->data.at(m.col).at(m.row) = m.sign;
         return true;
     }
     else
     {
+        std::cout << "This place is already taken. Choose another one!" << std::endl;
         return false;
     }
 }
 
-Move::Move(int k, int w, char color, double value)
+char Plane::who_won() const
 {
-    this->k = k;
-    this->w = w;
-    this->color = color;
-    this->value = value;
+    for (int i = 0; i < 3; i++)
+    {
+        if (this->get_sign_at(i, 0) == this->get_sign_at(i, 1) == this->get_sign_at(i, 2))
+        {
+            if (this->get_sign_at(i, 0) == 'O') {return 'O';}
+            else if(this->get_sign_at(i, 0) == 'X') {return 'X';}
+        }
+        else if (this->get_sign_at(0, i) == this->get_sign_at(1, i) == this->get_sign_at(2, i))
+        {
+            if (this->get_sign_at(0, i) == 'O') {return 'O';}
+            else if(this->get_sign_at(0, i) == 'X') {return 'X';}
+        }
 
+        else if (this->get_sign_at(0, 0) == this->get_sign_at(1, 1) == this->get_sign_at(2, 2)
+              or this->get_sign_at(0, 2) == this->get_sign_at(1, 1) == this->get_sign_at(2, 0))
+        {
+            if (this->get_sign_at(1, 1) == 'O') {return 'O';}
+            else if (this->get_sign_at(1, 1) == 'X') {return 'X';}
+        }
+        else {return ' ';} //Draw
+    }
+}
+
+std::ostream& operator << (std::ostream& stream, const Plane& plane)
+{
+    std::cout << "Current plane: " << std::endl;
+    std::cout << "-----" << std::endl << "| "
+              << plane.get_sign_at(0, 0) << plane.get_sign_at(0, 1) << plane.get_sign_at(0, 2)
+              << " |" << std::endl <<  "| "
+              << plane.get_sign_at(1, 0) << plane.get_sign_at(1, 1) << plane.get_sign_at(1, 2)
+              << " |" << std::endl <<  "| "
+              << plane.get_sign_at(2, 0) << plane.get_sign_at(2, 1)<< plane.get_sign_at(2, 2)
+              << " |" << std::endl << "-----" << std::endl;
+    return stream;
+}
+
+Move::Move(int k, int w, char color)
+{
+    this->col = k;
+    this->row = w;
+    this->sign = color;
 }
 
 Move::Move(const Move &ob)
 {
-    this->k = ob.k;
-    this->w = ob.w;
-    this->color = ob.color;
-    this->value = ob.value;
+    this->col = ob.col;
+    this->row = ob.row;
+    this->sign = ob.sign;
 }
 
 Move::Move(const Move &&ob)
 {
-    this->k = ob.k;
-    this->w = ob.w;
-    this->color = ob.color;
-    this->value = ob.value;
+    this->col = ob.col;
+    this->row = ob.row;
+    this->sign = ob.sign;
 }
