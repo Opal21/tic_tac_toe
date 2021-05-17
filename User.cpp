@@ -71,5 +71,20 @@ char Game::last_sign() const
 
 void Game::forward()
 {
-
+    std::cout << this->plane << std::endl;
+    if (!this->is_finished())
+    {
+        this->plane.make_move(this->players[0]->decide_move(this->plane));
+    } else
+    {
+        std::cout << this->plane.who_won() << " has won!" << this->plane;
+    }
+    std::cout << this->plane << std::endl;
+    if (!this->is_finished())
+    {
+        this->plane.make_move(this->players[1]->decide_move(this->plane));
+    } else
+    {
+        std::cout << this->plane.who_won() << " has won!" << this->plane;
+    }
 }
