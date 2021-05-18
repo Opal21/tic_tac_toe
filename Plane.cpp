@@ -3,45 +3,56 @@
 
 Plane::Plane(unsigned int size) : size_(size)
 {
+    this->data.resize(size);
     for (int i = 0; i < this->size_; i++)
     {
+        this->data[i].resize(size);
         for (int j = 0; j < this->size_; j++)
         {
-            this->data[i][j] = ' ';
+            this->data.at(i).at(j) = ' ';
         }
     }
 }
 
 Plane::Plane(const Plane &ob) : size_(ob.get_size())
 {
+    unsigned int size = ob.get_size();
+    this->data.resize(size);
     for (int i = 0; i < this->size_; i++)
     {
+        this->data[i].resize(size);
         for (int j = 0; j < this->size_; j++)
         {
-            this->data[i][j] = ob.get_sign_at(i, j);
+            this->data.at(i).at(j) = ob.get_sign_at(i, j);
         }
     }
 }
 
 Plane::Plane(const Plane &&ob) noexcept : size_(ob.get_size())
 {
+    unsigned int size = ob.get_size();
+    this->data.resize(size);
     for (int i = 0; i < this->size_; i++)
     {
+        this->data[i].resize(size);
         for (int j = 0; j < this->size_; j++)
         {
-            this->data[i][j] = ob.get_sign_at(i, j);
+            this->data.at(i).at(j) = ob.get_sign_at(i, j);
         }
     }
 }
 
 Plane &Plane::operator=(const Plane &ob)
 {
-    this->size_ = ob.get_size();
+    unsigned int size = ob.get_size();
+    this->data.resize(size);
+    this->size_ = size;
     for (int i = 0; i < this->size_; i++)
     {
+        this->data[i].resize(size);
         for (int j = 0; j < this->size_; j++)
         {
-            this->data[i][j] = ob.get_sign_at(i, j);
+            this->data.at(i).at(j) = ob.get_sign_at(i, j);
         }
     }
     return *this;
@@ -68,7 +79,7 @@ bool Plane::is_full() const
     {
         for (int j = 0; j < this->size_; j++)
         {
-            if (this->data[i][j] == ' ')
+            if (this->data.at(i).at(j) == ' ')
             {
                 return false;
             }
@@ -91,9 +102,40 @@ bool Plane::make_move(const Move &m)
     }
 }
 
+bool Plane::analyze_node(const Plane& plane, int col, int row) const
+{
+    const char color = plane.get_sign_at(col, row);
+    const unsigned int size = plane.get_size();
+    bool check_col = true, check_row = true, check_diag_1 = false, check_diag_2 = false;
+    if (col == row) { check_diag_1 = true; check_diag_2 = true; }
+    for (int i = 0; i < size; ++i)
+    {
+        if (plane.get_sign_at(col, i) != color)
+        {
+            check_col = false;
+        }
+        if (plane.get_sign_at(i, row)!= color)
+        {
+            check_row = false;
+        }
+        if (check_diag_1 || check_diag_2) // diagonals
+        {
+            if (plane.get_sign_at(i, i) != color)
+            {
+                check_diag_1 = false;
+            }
+            if (plane.get_sign_at(size - 1 - i, i) != color)
+            {
+                check_diag_2 = false;
+            }
+        }
+    }
+    return check_col || check_row || check_diag_1 || check_diag_2;
+}
+
 char Plane::who_won() const
 {
-    for (int i = 0; i < 3; i++)
+    /*for (int i = 0; i < 3; i++)
     {
         if (this->get_sign_at(i, 0) == this->get_sign_at(i, 1) == this->get_sign_at(i, 2))
         {
@@ -113,7 +155,19 @@ char Plane::who_won() const
             else if (this->get_sign_at(1, 1) == 'X') {return 'X';}
         }
         else {return ' ';} //Draw
+    }*/
+
+    for (int i = 0; i < this->size_; ++i)
+    {
+        for (int j = 0; j < this->size_; ++j)
+        {
+            if (analyze_node(*this, i, j))
+            {
+                return this->get_sign_at(i, j);
+            }
+        }
     }
+    return ' ';
 }
 
 std::ostream& operator << (std::ostream& stream, const Plane& plane)
@@ -136,16 +190,6 @@ Move::Move(int k, int w, char color)
     this->sign = color;
 }
 
-Move::Move(const Move &ob)
-{
-    this->col = ob.col;
-    this->row = ob.row;
-    this->sign = ob.sign;
-}
-
-Move::Move(const Move &&ob) noexcept
-{
-    this->col = ob.col;
-    this->row = ob.row;
-    this->sign = ob.sign;
-}
+Move::Move() = default;
+Move::Move(const Move&) = default;
+Move& Move::operator = (const Move&) = default;

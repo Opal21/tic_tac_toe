@@ -11,8 +11,10 @@ struct Move
 	char sign; // player_sign
 	
 	Move(int c, int r, char sign);
-	Move(const Move& ob);
-	Move(const Move&& ob) noexcept ;
+    Move();
+    Move(const Move&);
+    Move(const Move&&);
+    Move& operator = (const Move&);
 };
 
 class Plane
@@ -31,6 +33,7 @@ public:
     Plane& operator = (const Plane& ob);
 private:
     std::vector<std::vector<char>> data; // data[column][row]
+    bool analyze_node(const Plane& plane, int col, int row) const;
     unsigned int size_;
 };
 

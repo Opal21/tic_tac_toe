@@ -4,6 +4,10 @@
 
 int main()
 {
-    Game game(3, 0, 1);
+    Game game(3, 0, 0);
+    while (game.forward())
+    {
+
+    }
     return 0;
 }
