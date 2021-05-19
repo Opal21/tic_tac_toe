@@ -27,7 +27,7 @@ Bot::Bot(char player_sign)
 
 Move Bot::decide_move(const Plane &plane) const
 {
-    char col, row;
+    int col = 0, row = 0;
     return Move(col,row, this->get_player_sign());
 }
 

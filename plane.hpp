@@ -33,7 +33,7 @@ public:
     Plane& operator = (const Plane& ob);
 private:
     std::vector<std::vector<char>> data; // data[column][row]
-    bool analyze_node(const Plane& plane, int col, int row) const;
+    [[nodiscard]] bool analyze_node(const Plane& plane, int col, int row) const;
     unsigned int size_;
 };
 
