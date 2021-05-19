@@ -65,6 +65,11 @@ unsigned int Plane::get_size() const
 
 char Plane::get_sign_at(int column, int row) const
 {
+    if (column < 0 || row < 0 || column >= this->size_ || row >= this->size_)
+    {
+        std::cout << "Invalid column/row: " << column << ' ' << row << std::endl; // temporary
+        return 'E'; 
+    }
     return this->data.at(column).at(row);
 }
 
@@ -90,6 +95,12 @@ bool Plane::is_full() const
 
 bool Plane::make_move(const Move &m)
 {
+    //  Check if move is valid at all
+    if (m.col < 0 || m.row < 0 || m.col >= this->size_ || m.row >= this->size_)
+    {
+        return false;
+    }
+    // 
     if (this->get_sign_at(m.col, m.row) == ' ')
     {
         this->data.at(m.col).at(m.row) = m.sign;
@@ -97,7 +108,6 @@ bool Plane::make_move(const Move &m)
     }
     else
     {
-        std::cout << "This place is already taken. Choose another one!" << std::endl;
         return false;
     }
 }
@@ -204,6 +214,6 @@ Move::Move(int k, int w, char color)
     this->sign = color;
 }
 
-Move::Move() = default;
+Move::Move() : col(-1), row(-1), sign(-1) {}
 Move::Move(const Move&) = default;
 Move& Move::operator = (const Move&) = default;

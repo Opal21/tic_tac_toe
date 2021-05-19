@@ -7,7 +7,7 @@
 int main()
 {
     srand(time(NULL));
-    Game game(4, 2, 0);
+    Game game(4, 2, 1);
     while (game.forward())
     {
 
