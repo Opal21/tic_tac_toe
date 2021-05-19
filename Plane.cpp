@@ -161,9 +161,12 @@ char Plane::who_won() const
     {
         for (int j = 0; j < this->size_; ++j)
         {
-            if (analyze_node(*this, i, j))
+            if (this->get_sign_at(i, j) != ' ')
             {
-                return this->get_sign_at(i, j);
+                if (analyze_node(*this, i, j))
+                {
+                    return this->get_sign_at(i, j);
+                }
             }
         }
     }
@@ -172,14 +175,25 @@ char Plane::who_won() const
 
 std::ostream& operator << (std::ostream& stream, const Plane& plane)
 {
-    std::cout << "Current plane: " << std::endl;
-    std::cout << " -----" << std::endl << "| "
-              << plane.get_sign_at(0, 0) << plane.get_sign_at(0, 1) << plane.get_sign_at(0, 2)
-              << " |" << std::endl <<  "| "
-              << plane.get_sign_at(1, 0) << plane.get_sign_at(1, 1) << plane.get_sign_at(1, 2)
-              << " |" << std::endl <<  "| "
-              << plane.get_sign_at(2, 0) << plane.get_sign_at(2, 1)<< plane.get_sign_at(2, 2)
-              << " |" << std::endl << " -----" << std::endl;
+    for (int i = 0; i < plane.get_size()+2; ++i)
+    {
+        stream << '-' << '-';
+    }
+    stream << std::endl;
+    for (int i = 0; i < plane.get_size(); ++i)
+    {
+        stream << '|' << ' ';
+        for (int j = 0; j < plane.get_size(); ++j)
+        {
+            stream << plane.get_sign_at(j, i) << ' ';
+        }
+        stream << '|' << std::endl;
+    }
+    for (int i = 0; i < plane.get_size() + 2; ++i)
+    {
+        stream << '-' << '-';
+    }
+
     return stream;
 }
 

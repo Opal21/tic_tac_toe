@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "user.hpp"
 
 char User::get_player_sign() const
@@ -25,9 +26,18 @@ Bot::Bot(char player_sign)
     this->player_sign = player_sign;
 }
 
+int Bot::loss(const int& min, const int& max) const
+{
+    return rand() % (max - min + 1) + min;
+}
+
 Move Bot::decide_move(const Plane &plane) const
 {
-    int col = 0, row = 0;
+    int col = -1, row = -1;
+    do {
+        col = this->loss(0, plane.get_size() - 1);
+        row = this->loss(0, plane.get_size() - 1);
+    } while (plane.get_sign_at(col, row) != ' ');
     return Move(col,row, this->get_player_sign());
 }
 

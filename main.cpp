@@ -1,10 +1,13 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "user.hpp"
 #include "plane.hpp"
 
 int main()
 {
-    Game game(3, 0, 0);
+    srand(time(NULL));
+    Game game(4, 2, 0);
     while (game.forward())
     {
 

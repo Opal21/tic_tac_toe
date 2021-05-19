@@ -26,7 +26,7 @@ public:
 class Bot : public User
 {
 private:
-
+    int loss(const int& min, const int& max) const;
 public:
     explicit Bot(char player_sign);
     [[nodiscard]] Move decide_move(const Plane& plane) const;
