@@ -6,8 +6,11 @@
 
 int main()
 {
+    int game_size, x_player, o_player;
     srand(time(NULL));
-    Game game(4, 2, 1);
+    std::cout << "Enter game size, X player type and O player type: " << std::endl;
+    std::cin >> game_size >> x_player >> o_player;
+    Game game(game_size, x_player, o_player);
     while (game.forward())
     {
 
