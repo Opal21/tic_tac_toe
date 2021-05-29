@@ -2,8 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 #include "Game.hpp"
-#include "user.hpp"
-#include "plane.hpp"
 
 int main()
 {
