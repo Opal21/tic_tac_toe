@@ -7,11 +7,11 @@
 
 int main()
 {
-    int game_size, x_player, o_player;
     srand(time(NULL));
-    std::cout << "Enter game size, X player type and O player type: " << std::endl;
-    std::cin >> game_size >> x_player >> o_player;
-    Game game(game_size, x_player, o_player);
+    int size = 4;
+    std::cout << "Size of arena: ";
+    std::cin >> size;
+    Game game(size, 1, 2);
     while (game.forward())
     {
         game.save("file.txt");

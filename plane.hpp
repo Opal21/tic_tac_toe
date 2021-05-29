@@ -13,7 +13,7 @@ public:
     [[nodiscard]] char get_sign_at(int k, int w) const;
     [[nodiscard]] bool is_full() const; // check if the game array is full
     [[nodiscard]] char who_won() const; // decide who won, possible outcomes: 'X', 'O', ' '
-    [[nodiscard]] std::vector<Move> evaluate(char player_color) const; // evaluate
+    [[nodiscard]] std::vector<Move> get_possible_moves(char player_color) const; 
     bool make_move(const Move& m);
 
     explicit Plane(unsigned int size);

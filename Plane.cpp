@@ -78,9 +78,20 @@ char Plane::get_sign_at(int column, int row) const
     return this->data.at(column).at(row);
 }
 
-std::vector<Move> Plane::evaluate(char player_color) const
+std::vector<Move> Plane::get_possible_moves(char player_color) const
 {
-    return std::vector<Move>();
+    std::vector<Move> output;
+    for (int i = 0; i < this->get_size(); ++i)
+    {
+        for (int j = 0; j < this->get_size(); ++j)
+        {
+            if (this->get_sign_at(i, j) == ' ')
+            {
+                output.push_back(Move(i, j, player_color));
+            }
+        }
+    }
+    return output;
 }
 
 bool Plane::is_full() const

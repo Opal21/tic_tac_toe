@@ -44,10 +44,12 @@ int Bot::UserMode() const
 
 Move Bot::decide_move(const Plane &plane) const
 {
-    int col = -1, row = -1;
+    /*int col = -1, row = -1;
     do {
         col = this->loss(0, plane.get_size() - 1);
         row = this->loss(0, plane.get_size() - 1);
-    } while (plane.get_sign_at(col, row) != ' ');
-    return Move(col,row, this->get_player_sign());
+    } while (plane.get_sign_at(col, row) != ' ');*/
+    std::vector<Move> possible_moves = plane.get_possible_moves(this->get_player_sign());
+    Move output = possible_moves.at(loss(0, possible_moves.size() - 1));
+    return output;
 }
