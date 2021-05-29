@@ -1,73 +1,219 @@
 #include <iostream>
-#include "inc/Plane.h"
+#include "plane.hpp"
 
-Plane::Plane() : size_(3), someoneWon(false), plane_(nullptr) {}
-
-Plane::Plane(int size) : size_(size), plane_(new char* [size])
+Plane::Plane(unsigned int size) : size_(size)
 {
-    for (int i=0; i < size_; i++)
+    this->data.resize(size);
+    for (int i = 0; i < this->size_; i++)
     {
-        plane_[i] = new char [size_];
+        this->data[i].resize(size);
+        for (int j = 0; j < this->size_; j++)
+        {
+            this->data.at(i).at(j) = ' ';
+        }
     }
 }
 
-bool Plane::IsEmpty()
+Plane::Plane(const Plane &ob) : size_(ob.get_size())
 {
-    return false;
+    unsigned int size = ob.get_size();
+    this->data.resize(size);
+    for (int i = 0; i < this->size_; i++)
+    {
+        this->data[i].resize(size);
+        for (int j = 0; j < this->size_; j++)
+        {
+            this->data.at(i).at(j) = ob.get_sign_at(i, j);
+        }
+    }
 }
 
-bool Plane::IsFull()
+Plane::Plane(const Plane &&ob) noexcept : size_(ob.get_size())
 {
-    // Iterate over every element
-    return false;
+    unsigned int size = ob.get_size();
+    this->data.resize(size);
+    for (int i = 0; i < this->size_; i++)
+    {
+        this->data[i].resize(size);
+        for (int j = 0; j < this->size_; j++)
+        {
+            this->data.at(i).at(j) = ob.get_sign_at(i, j);
+        }
+    }
 }
 
-int Plane::get_size() const
+Plane &Plane::operator=(const Plane &ob)
+{
+    unsigned int size = ob.get_size();
+    this->data.resize(size);
+    this->size_ = size;
+    for (int i = 0; i < this->size_; i++)
+    {
+        this->data[i].resize(size);
+        for (int j = 0; j < this->size_; j++)
+        {
+            this->data.at(i).at(j) = ob.get_sign_at(i, j);
+        }
+    }
+    return *this;
+}
+
+unsigned int Plane::get_size() const
 {
     return this->size_;
 }
 
-void Plane::PrintPlane() const
+char Plane::get_sign_at(int column, int row) const
 {
-    std::cout << "Current plane: " << std::endl;
-    std::cout << "---------" << std::endl << "| " << plane_[0][0] << plane_[0][1] << plane_[0][2]
-              << plane_[0][2] << " |" << std::endl <<  "| " << plane_[1][0] << plane_[1][1]
-              << plane_[1][2] << " |" << std::endl <<  "| " << plane_[2][0] << plane_[2][1]
-              << plane_[2][2] << " |" << std::endl << "---------" << std::endl;
+    if (column < 0 || row < 0 || column >= this->size_ || row >= this->size_)
+    {
+        std::cout << "Invalid column/row: " << column << ' ' << row << std::endl; // temporary
+        return 'E'; 
+    }
+    return this->data.at(column).at(row);
 }
 
-char Plane::DecideWinner() const
+std::vector<Move> Plane::evaluate(char player_color) const
 {
-    for (int i = 0; i < 3; i++)
+    return std::vector<Move>();
+}
+
+bool Plane::is_full() const
+{
+    for (int i = 0; i < this->size_; i++)
     {
-        if (plane_[i][0] == plane_[i][1] == plane_[i][2])
+        for (int j = 0; j < this->size_; j++)
         {
-            if (plane_[i][0] == 'O')
+            if (this->data.at(i).at(j) == ' ')
             {
-                return 'O';
-            }
-
-            else if(plane_[i][0] == 'X')
-            {
-                return 'X';
+                return false;
             }
         }
-        else if (plane_[0][i] == plane_[1][i] == plane_[2][i])
-        {
-            if (plane_[0][i] == 'O') {return 'O';}
+    }
+    return true;
+}
 
-            else if(plane_[0][i] == 'X') {return 'X';}
-        }
-
-        else if (plane_[0][0] == plane_[1][1] == plane_[2][2] or plane_[0][2] == plane_[1][1] ==
-        plane_[2][0])
-        {
-            if (plane_[1][1] == 'O') {return 'O';}
-            else if (plane_[1][1] == 'X') {return 'X';}
-        }
-        else {return 'D';} //Draw
-
+bool Plane::make_move(const Move &m)
+{
+    //  Check if move is valid at all
+    if (m.col < 0 || m.row < 0 || m.col >= this->size_ || m.row >= this->size_)
+    {
+        return false;
+    }
+    // 
+    if (this->get_sign_at(m.col, m.row) == ' ')
+    {
+        this->data.at(m.col).at(m.row) = m.sign;
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
-char Plane::DecideTurn() {}
+bool Plane::analyze_node(const Plane& plane, int col, int row) const
+{
+    const char color = plane.get_sign_at(col, row);
+    const unsigned int size = plane.get_size();
+    bool check_col = true, check_row = true, check_diag_1 = false, check_diag_2 = false;
+    if (col == row) { check_diag_1 = true; check_diag_2 = true; }
+    for (int i = 0; i < size; ++i)
+    {
+        if (plane.get_sign_at(col, i) != color)
+        {
+            check_col = false;
+        }
+        if (plane.get_sign_at(i, row)!= color)
+        {
+            check_row = false;
+        }
+        if (check_diag_1 || check_diag_2) // diagonals
+        {
+            if (plane.get_sign_at(i, i) != color)
+            {
+                check_diag_1 = false;
+            }
+            if (plane.get_sign_at(size - 1 - i, i) != color)
+            {
+                check_diag_2 = false;
+            }
+        }
+    }
+    return check_col || check_row || check_diag_1 || check_diag_2;
+}
+
+char Plane::who_won() const
+{
+    /*for (int i = 0; i < 3; i++)
+    {
+        if (this->get_sign_at(i, 0) == this->get_sign_at(i, 1) == this->get_sign_at(i, 2))
+        {
+            if (this->get_sign_at(i, 0) == 'O') {return 'O';}
+            else if(this->get_sign_at(i, 0) == 'X') {return 'X';}
+        }
+        else if (this->get_sign_at(0, i) == this->get_sign_at(1, i) == this->get_sign_at(2, i))
+        {
+            if (this->get_sign_at(0, i) == 'O') {return 'O';}
+            else if(this->get_sign_at(0, i) == 'X') {return 'X';}
+        }
+
+        else if (this->get_sign_at(0, 0) == this->get_sign_at(1, 1) == this->get_sign_at(2, 2)
+              or this->get_sign_at(0, 2) == this->get_sign_at(1, 1) == this->get_sign_at(2, 0))
+        {
+            if (this->get_sign_at(1, 1) == 'O') {return 'O';}
+            else if (this->get_sign_at(1, 1) == 'X') {return 'X';}
+        }
+        else {return ' ';} //Draw
+    }*/
+
+    for (int i = 0; i < this->size_; ++i)
+    {
+        for (int j = 0; j < this->size_; ++j)
+        {
+            if (this->get_sign_at(i, j) != ' ')
+            {
+                if (analyze_node(*this, i, j))
+                {
+                    return this->get_sign_at(i, j);
+                }
+            }
+        }
+    }
+    return ' ';
+}
+
+std::ostream& operator << (std::ostream& stream, const Plane& plane)
+{
+    for (int i = 0; i < plane.get_size()+2; ++i)
+    {
+        stream << '-' << '-';
+    }
+    stream << std::endl;
+    for (int i = 0; i < plane.get_size(); ++i)
+    {
+        stream << '|' << ' ';
+        for (int j = 0; j < plane.get_size(); ++j)
+        {
+            stream << plane.get_sign_at(j, i) << ' ';
+        }
+        stream << '|' << std::endl;
+    }
+    for (int i = 0; i < plane.get_size() + 2; ++i)
+    {
+        stream << '-' << '-';
+    }
+
+    return stream;
+}
+
+Move::Move(int k, int w, char color)
+{
+    this->col = k;
+    this->row = w;
+    this->sign = color;
+}
+
+Move::Move() : col(-1), row(-1), sign(-1) {}
+Move::Move(const Move&) = default;
+Move& Move::operator = (const Move&) = default;
