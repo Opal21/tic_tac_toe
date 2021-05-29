@@ -1,5 +1,10 @@
 #include <iostream>
 #include "plane.hpp"
+#include "lib.hpp"
+
+#define HEADER "PLANE"
+#define HEADER_REV "ENALP"
+#define HEADER_LEN 5
 
 Plane::Plane(unsigned int size) : size_(size)
 {
@@ -207,13 +212,39 @@ std::ostream& operator << (std::ostream& stream, const Plane& plane)
     return stream;
 }
 
-Move::Move(int k, int w, char color)
+std::ofstream& operator << (std::ofstream& stream, const Plane& plane)
 {
-    this->col = k;
-    this->row = w;
-    this->sign = color;
+    save_header(stream, HEADER, HEADER_LEN);
+    auto size = plane.get_size();
+    stream.write((const char*)&size, sizeof(size));
+    for (int i = 0; i < size; ++i)
+    {
+        for (int j = 0; j < size; ++j)
+        {
+            auto sign = plane.get_sign_at(i, j);
+            stream.write((const char*)&sign, sizeof(sign));
+        }
+    }
+    save_header(stream, HEADER_REV, HEADER_LEN);
+    return stream;
 }
 
-Move::Move() : col(-1), row(-1), sign(-1) {}
-Move::Move(const Move&) = default;
-Move& Move::operator = (const Move&) = default;
+std::ifstream& operator >> (std::ifstream& stream, Plane& plane)
+{
+    assertm(check_header(stream, HEADER, HEADER_LEN), "Failed to load plane header Savefile is probably corrupted");
+    auto size = plane.get_size(); // just to get type of size 
+    stream.read((char*)&size, sizeof(size));
+    plane = Plane(size);
+    for (int i = 0; i < size; ++i)
+    {
+        for (int j = 0; j < size; ++j)
+        {
+            char tmp = 0;
+            stream.read(&tmp, sizeof(tmp));
+            Move move(i, j, tmp);
+            plane.make_move(move);
+        }
+    }
+    assertm(check_header(stream, HEADER_REV, HEADER_LEN), "Failed to load plane endmark. Savefile is probably corrupted");
+    return stream;
+}

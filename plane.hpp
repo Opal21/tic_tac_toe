@@ -3,19 +3,8 @@
 
 #include <vector>
 #include <iostream>
-
-struct Move
-{
-	int col; // column
-	int row; // row
-	char sign; // player_sign
-	
-	Move(int c, int r, char sign);
-    Move();
-    Move(const Move&);
-    Move(const Move&&);
-    Move& operator = (const Move&);
-};
+#include <fstream>
+#include "Move.hpp"
 
 class Plane
 {
@@ -38,5 +27,7 @@ private:
 };
 
 std::ostream& operator << (std::ostream& stream, const Plane& plane);
+std::ofstream& operator << (std::ofstream& stream, const Plane& plane);
+std::ifstream& operator >> (std::ifstream& stream, Plane& plane);
 
 #endif
