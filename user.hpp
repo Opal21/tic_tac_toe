@@ -27,7 +27,7 @@ public:
 class Bot : public User
 {
 private:
-    int loss(const int& min, const int& max) const;
+    [[nodiscard]] static int loss(const int& min, const int& max) ;
 public:
     explicit Bot(char player_sign);
     [[nodiscard]] Move decide_move(const Plane& plane) const;

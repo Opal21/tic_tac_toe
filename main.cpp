@@ -7,7 +7,7 @@
 
 int main()
 {
-    srand(time(NULL));
+    srand(time(nullptr));
     int size = 4;
     std::cout << "Size of arena: ";
     std::cin >> size;

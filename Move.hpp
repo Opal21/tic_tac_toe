@@ -1,5 +1,3 @@
-#pragma once
-
 struct Move
 {
 	int col; // column
@@ -8,6 +6,7 @@ struct Move
 
 	Move(int c, int r, char sign);
 	Move();
-	Move(const Move&);
+
+    [[maybe_unused]] Move(const Move&);
 	Move& operator = (const Move&);
 };

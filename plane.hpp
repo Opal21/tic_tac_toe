@@ -17,12 +17,12 @@ public:
     bool make_move(const Move& m);
 
     explicit Plane(unsigned int size);
-    Plane(const Plane& ob);
+    [[maybe_unused]] Plane(const Plane& ob);
     Plane(const Plane&& ob) noexcept ;
     Plane& operator = (const Plane& ob);
 private:
     std::vector<std::vector<char>> data; // data[column][row]
-    [[nodiscard]] bool analyze_node(const Plane& plane, int col, int row) const;
+    [[nodiscard]] static bool analyze_node(const Plane& plane, int col, int row) ;
     unsigned int size_;
 };
 

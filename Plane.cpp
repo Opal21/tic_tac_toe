@@ -19,7 +19,7 @@ Plane::Plane(unsigned int size) : size_(size)
     }
 }
 
-Plane::Plane(const Plane &ob) : size_(ob.get_size())
+[[maybe_unused]] Plane::Plane(const Plane &ob) : size_(ob.get_size())
 {
     unsigned int size = ob.get_size();
     this->data.resize(size);
@@ -87,7 +87,7 @@ std::vector<Move> Plane::get_possible_moves(char player_color) const
         {
             if (this->get_sign_at(i, j) == ' ')
             {
-                output.push_back(Move(i, j, player_color));
+                output.emplace_back(i, j, player_color);
             }
         }
     }
@@ -128,7 +128,7 @@ bool Plane::make_move(const Move &m)
     }
 }
 
-bool Plane::analyze_node(const Plane& plane, int col, int row) const
+bool Plane::analyze_node(const Plane& plane, int col, int row)
 {
     const char color = plane.get_sign_at(col, row);
     const unsigned int size = plane.get_size();
@@ -161,28 +161,6 @@ bool Plane::analyze_node(const Plane& plane, int col, int row) const
 
 char Plane::who_won() const
 {
-    /*for (int i = 0; i < 3; i++)
-    {
-        if (this->get_sign_at(i, 0) == this->get_sign_at(i, 1) == this->get_sign_at(i, 2))
-        {
-            if (this->get_sign_at(i, 0) == 'O') {return 'O';}
-            else if(this->get_sign_at(i, 0) == 'X') {return 'X';}
-        }
-        else if (this->get_sign_at(0, i) == this->get_sign_at(1, i) == this->get_sign_at(2, i))
-        {
-            if (this->get_sign_at(0, i) == 'O') {return 'O';}
-            else if(this->get_sign_at(0, i) == 'X') {return 'X';}
-        }
-
-        else if (this->get_sign_at(0, 0) == this->get_sign_at(1, 1) == this->get_sign_at(2, 2)
-              or this->get_sign_at(0, 2) == this->get_sign_at(1, 1) == this->get_sign_at(2, 0))
-        {
-            if (this->get_sign_at(1, 1) == 'O') {return 'O';}
-            else if (this->get_sign_at(1, 1) == 'X') {return 'X';}
-        }
-        else {return ' ';} //Draw
-    }*/
-
     for (int i = 0; i < this->size_; ++i)
     {
         for (int j = 0; j < this->size_; ++j)
@@ -242,7 +220,7 @@ std::ofstream& operator << (std::ofstream& stream, const Plane& plane)
 
 std::ifstream& operator >> (std::ifstream& stream, Plane& plane)
 {
-    assertm(check_header(stream, HEADER, HEADER_LEN), "Failed to load plane header Savefile is probably corrupted");
+    assertm(check_header(stream, HEADER, HEADER_LEN), "Failed to load plane header save file is probably corrupted");
     auto size = plane.get_size(); // just to get type of size 
     stream.read((char*)&size, sizeof(size));
     plane = Plane(size);
@@ -256,6 +234,6 @@ std::ifstream& operator >> (std::ifstream& stream, Plane& plane)
             plane.make_move(move);
         }
     }
-    assertm(check_header(stream, HEADER_REV, HEADER_LEN), "Failed to load plane endmark. Savefile is probably corrupted");
+    assertm(check_header(stream, HEADER_REV, HEADER_LEN), "Failed to load plane endmarker. Save file is probably corrupted");
     return stream;
 }
