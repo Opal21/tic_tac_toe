@@ -3,7 +3,6 @@
 
 #include "plane.hpp"
 #include <iostream>
-#include <string>
 
 class User 
 {
@@ -11,6 +10,7 @@ protected:
 		char player_sign{};
 public:
     [[nodiscard]] virtual Move decide_move(const Plane& plane) const = 0;
+    [[nodiscard]] virtual int UserMode() const = 0;
     [[nodiscard]] char get_player_sign() const;
 };
 
@@ -21,6 +21,7 @@ private:
 public:
     explicit Player(char player_sign);
     [[nodiscard]] Move decide_move(const Plane& plane) const;
+    [[nodiscard]] int UserMode() const;
 };
 
 class Bot : public User
@@ -30,6 +31,7 @@ private:
 public:
     explicit Bot(char player_sign);
     [[nodiscard]] Move decide_move(const Plane& plane) const;
+    [[nodiscard]] int UserMode() const;
 };
 
 #endif
