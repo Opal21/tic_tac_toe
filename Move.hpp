@@ -7,6 +7,6 @@ struct Move
 	Move(int c, int r, char sign);
 	Move();
 
-    [[maybe_unused]] Move(const Move&);
+    Move(const Move&);
 	Move& operator = (const Move&);
 };

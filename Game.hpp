@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include "plane.hpp"
-#include "user.hpp"
+#include "Plane.hpp"
+#include "User.hpp"
 
 class Game
 {

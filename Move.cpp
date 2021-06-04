@@ -8,5 +8,5 @@ Move::Move(int k, int w, char color)
 }
 
 Move::Move() : col(-1), row(-1), sign(-1) {}
-[[maybe_unused]] Move::Move(const Move&) = default;
+Move::Move(const Move&) = default;
 Move& Move::operator = (const Move&) = default;

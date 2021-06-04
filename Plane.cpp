@@ -1,6 +1,6 @@
 #include <iostream>
-#include "plane.hpp"
-#include "lib.hpp"
+#include "Plane.hpp"
+#include "Lib.hpp"
 
 #define HEADER "PLANE"
 #define HEADER_REV "ENALP"

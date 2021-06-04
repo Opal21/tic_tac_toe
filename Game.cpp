@@ -2,7 +2,7 @@
 #include "Game.hpp"
 #include <string>
 #include <fstream>
-#include "lib.hpp"
+#include "Lib.hpp"
 
 #define HEADER "GAME"
 #define HEADER_REV "EMAG"

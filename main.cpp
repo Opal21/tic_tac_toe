@@ -6,10 +6,12 @@
 int main()
 {
     srand(time(nullptr));
-    int size = 4;
-    std::cout << "Size of arena: ";
+    int x_player, y_player, size = 4;
+    std::cout << "Enter the size of arena: ";
     std::cin >> size;
-    Game game(size, 1, 2);
+    std::cout << "Enter player types (X, O): ";
+    std::cin >> x_player >> y_player;
+    Game game(size, x_player, y_player);
     while (game.forward())
     {
         game.save("file.txt");

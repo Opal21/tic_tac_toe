@@ -1,7 +1,7 @@
 #ifndef USER_HPP
 #define USER_HPP
 
-#include "plane.hpp"
+#include "Plane.hpp"
 #include <iostream>
 
 class User 

@@ -1,4 +1,4 @@
-#include "lib.hpp"
+#include "Lib.hpp"
 
 void save_header(std::ofstream& stream, const char* header, int length)
 {

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstdlib>
-#include "user.hpp"
+#include "User.hpp"
 
 char User::get_player_sign() const
 {
